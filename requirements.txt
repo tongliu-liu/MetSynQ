@@ -1,0 +1,21 @@
+# MS Data Analysis Suite - Python 3.10.18 Dependencies
+
+# Data manipulation and scientific computing
+numpy==1.26.4
+pandas==2.3.2
+scipy==1.15.3
+scikit-learn==1.7.2
+
+# Mass Spectrometry file parsing
+pymzml==2.6.0
+
+# Deep learning and object detection
+torch==2.6.0
+ultralytics==8.3.108
+
+# Plotting and visualization
+matplotlib==3.10.8
+
+# Utilities
+natsort==8.4.0
+tqdm==4.67.3
