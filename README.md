@@ -16,7 +16,7 @@ MetSynQ is a robust, high-throughput pipeline designed for both **Multiple React
 - **Automated Data Conversion:** Seamless conversion of vendor-specific `.wiff` files to open `.mzML` formats via Dockerized ProteoWizard.
 - **Deep Learning-Assisted Peak Extraction:** Utilizes state-of-the-art YOLO models to recognize complex peak shapes that traditional algorithms miss.
 - **Robust Clustering & Anomaly Detection:** Employs DBSCAN and multithreaded group-based inconsistency correction to eliminate false positives and align features.
-- **Mathematical Refinding (`PeakRefinder`):** Intelligently "re-calls" missing peaks in specific samples to ensure a complete, NA-free quantitative matrix.
+- **Mathematical Refinding:** Intelligently "re-calls" missing peaks in specific samples to ensure a complete, NA-free quantitative matrix.
 
 ---
 
@@ -35,7 +35,7 @@ MetSynQ is a robust, high-throughput pipeline designed for both **Multiple React
 
 **1. Clone the repository**
 ```bash
-git clone [https://github.com/](https://github.com/)[YourUsername]/MetSynQ.git
+git clone [https://github.com/](https://github.com/)tongliu-liu/MetSynQ.git
 cd MetSynQ
 ```
 
