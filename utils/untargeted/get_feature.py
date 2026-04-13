@@ -101,7 +101,7 @@ class PeakList:
         script_dir = os.path.dirname(os.path.abspath(__file__))
         r_script_path = os.path.join(script_dir, "find_peaks.R")
         
-        r_executable = "/share/software/apps/anaconda3_v2205/envs/stable_R4.2/bin/Rscript"
+        r_executable = "Rscript"
         
         cmd = [
             r_executable, r_script_path, 

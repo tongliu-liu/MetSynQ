@@ -52,7 +52,7 @@ def parse_mzml_file(chrom_file, indir):
       This includes sample ID, Q1, Q3 values, start/end values, RT data, and m/z data.
     """
     full_path = os.path.join(indir, "mzML", chrom_file)
-    sampleID = full_path.split("/")[-1].split("-")[-1][:-5].split("(")[0].strip()  # Extract the sample ID
+    sampleID = os.path.basename(full_path).split("-")[-1][:-5].split("(")[0].strip()  # Extract the sample ID
     tree = ET.parse(full_path)  # Parse the XML file
     root = tree.getroot()
 

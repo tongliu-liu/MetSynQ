@@ -300,7 +300,7 @@ def run_untargeted_pipeline(args=None):
     dataset_dataframe = pd.DataFrame(dataset_1, columns=['SampleID', 'quan', 'rt', "int"])
     
     end = time.time()
-    print(f"🚀 Untargeted Pipeline Finished! 运行时间：{end - start:.3f} 秒")
+    print(f"[*] Untargeted Pipeline Finished! Runtime: {end - start:.3f} seconds")
     
     # Executing multi-thread plotting
     plot_peaks_multithread(args.threads, peak_matrix, dataset_dataframe, args.indir, peak_information_final, all_ions)

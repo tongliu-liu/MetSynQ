@@ -75,12 +75,12 @@ def main():
     # 4. Route execution based on the user's workflow selection
     # ==========================================
     if args.workflow == "targeted":
-        print("🚀 Starting Targeted (MRM) Workflow...")
+        print("[*] Starting Targeted (MRM) Workflow...")
         # Delegate execution and pass the parsed namespace to the targeted logic
         run_targeted_pipeline(args)
         
     elif args.workflow == "untargeted":
-        print("🚀 Starting Untargeted Workflow...")
+        print("[*] Starting Untargeted Workflow...")
         # Delegate execution and pass the parsed namespace to the untargeted logic
         run_untargeted_pipeline(args)
         print("Notice: Untargeted pipeline is currently under construction.")

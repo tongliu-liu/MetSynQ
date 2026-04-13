@@ -204,7 +204,7 @@ def run(dataset, indir, num_threads):
 
     out_path = os.path.join(output_dir, "result.csv")
     merged_df.to_csv(out_path, index=False)
-    print(f"\n✅ Results saved to {out_path}")
+    print(f"\n[*] Results saved to {out_path}")
 
 
 def parse_arguments():

@@ -513,7 +513,7 @@ def main():
                 plt.xticks(fontsize=12)
                 plt.yticks(fontsize=12)
                 num_N += 1
-        plt.savefig(f'{indir}/TIC/{indir.split("/")[-1]}_QC_MS_tic_overlap-N.pdf', format='pdf')
+        plt.savefig(f'{indir}/TIC/{os.path.basename(os.path.normpath(indir))}_QC_MS_tic_overlap-N.pdf', format='pdf')
         plt.close()
 
     # QC_MS_tic_overlap-P
@@ -559,7 +559,7 @@ def main():
                 plt.xticks(fontsize=12)
                 plt.yticks(fontsize=12)
                 num_P += 1
-        plt.savefig(f'{indir}/TIC/{indir.split("/")[-1]}_QC_MS_tic_overlap-P.pdf', format='pdf')
+        plt.savefig(f'{indir}/TIC/{os.path.basename(os.path.normpath(indir))}_QC_MS_tic_overlap-P.pdf', format='pdf')
         plt.close()
 
     # QC_MS_TIC-P
@@ -604,7 +604,7 @@ def main():
                 plt.legend(handles=[legend_square], loc='upper left', fontsize=8, frameon=False)
                 P_max_value = max(tic_sample[1])
                 P_min_value = min(tic_sample[1])
-        plt.savefig(f'{indir}/TIC/{indir.split("/")[-1]}_QC_MS_TIC-P.pdf', format='pdf')
+        plt.savefig(f'{indir}/TIC/{os.path.basename(os.path.normpath(indir))}_QC_MS_TIC-P.pdf', format='pdf')
         plt.close()
 
     # QC_MS_TIC-N
@@ -649,7 +649,7 @@ def main():
                 plt.legend(handles=[legend_square], loc='upper left', fontsize=8, frameon=False)
                 N_max_value = max(tic_sample[1])
                 N_min_value = min(tic_sample[1])
-        plt.savefig(f'{indir}/TIC/{indir.split("/")[-1]}_QC_MS_TIC-N.pdf', format='pdf')
+        plt.savefig(f'{indir}/TIC/{os.path.basename(os.path.normpath(indir))}_QC_MS_TIC-N.pdf', format='pdf')
         plt.close()
 
     dataset = []
@@ -705,7 +705,7 @@ def main():
                     ax.xaxis.set_major_locator(MultipleLocator(1))
                     plt.legend(handles=[legend_square], loc='upper left', fontsize=8, frameon=False)
                     num_N += 1
-        plt.savefig(f'{indir}/TIC/{indir.split("/")[-1]}_MRM_detection_of_multimodal_maps-N.pdf', format='pdf')
+        plt.savefig(f'{indir}/TIC/{os.path.basename(os.path.normpath(indir))}_MRM_detection_of_multimodal_maps-N.pdf', format='pdf')
         plt.close()
 
     # MRM_detection_of_multimodal_maps-P
@@ -742,7 +742,7 @@ def main():
                     ax.xaxis.set_major_locator(MultipleLocator(1))
                     plt.legend(handles=[legend_square], loc='upper left', fontsize=8, frameon=False)
                     num_P += 1
-        plt.savefig(f'{indir}/TIC/{indir.split("/")[-1]}_MRM_detection_of_multimodal_maps-P.pdf', format='pdf')
+        plt.savefig(f'{indir}/TIC/{os.path.basename(os.path.normpath(indir))}_MRM_detection_of_multimodal_maps-P.pdf', format='pdf')
         plt.close()
 
     with open(os.path.join(indir, 'temp/dataset_all_samples.pkl'), 'wb') as f:
