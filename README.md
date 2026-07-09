@@ -63,7 +63,7 @@ Prepare your project directory with the following structure before running the p
 ```text
 Your_Project_Folder/
 ├── mzML/                  # Directory containing .mzML or .wiff files
-├── sample_info.csv        # Metadata mapping sample names to their biological groups
+├── sample_info.csv        # Metadata mapping sample names to their sample groups
 └── ALL_ions.xlsx          # Theoretical m/z and RT targets (Only required for Targeted mode)
 ```
 
@@ -103,6 +103,26 @@ Upon completion, the software generates a `temp/` folder (for intermediate calcu
 - **`peak_final.csv`**: The comprehensive feature matrix containing peak areas, heights, retention times, and SNR metrics for all samples.
 - **`peak_table_filter.csv`**: The rigorously filtered and aligned peak matrix, perfectly formatted for downstream statistical analysis (e.g., PCA, PLS-DA, Differential analysis).
 - **`picture/`**: A directory containing auto-generated, high-resolution grid plots highlighting the integrated peak boundaries (red shaded areas) against theoretical RTs (dashed lines) for rapid visual validation.
+
+---
+
+## 🖐️ Manual Peak Curator (Companion Tool)
+
+`manual_peak_curator_tool/` contains a standalone GUI used in the paper to produce the **manually curated reference (ground-truth) peak areas** for the untargeted datasets, and to re-quantify newly flagged differential-metabolite candidates by hand.
+
+It is deliberately independent of the MetSynQ pipeline — it imports no MetSynQ source code, so the manual reference cannot inherit any bias from the automated method it is used to evaluate.
+
+**What it does:** loads a folder of `.mzML` files plus an m/z–RT feature table, draws the extracted ion chromatogram (EIC) of each feature across all samples in a scrollable grid, and lets an analyst drag the retention-time integration boundaries per sample (or apply one boundary to all samples). Areas are recomputed on the fly by trapezoidal integration after linear baseline subtraction between the boundary endpoints.
+
+**Outputs:** a curated long-format table and area matrix, plus `manual_curation_edits.csv` and `manual_curation_metadata.json`, which log every boundary change and the input file checksums so the curation is fully auditable.
+
+```bash
+cd manual_peak_curator_tool
+pip install -r requirements.txt
+python manual_peak_curator.py          # or double-click run_tool.bat on Windows
+```
+
+Note that this tool performs **no feature discovery** — it curates the integration of features it is given. See [`manual_peak_curator_tool/README.md`](manual_peak_curator_tool/README.md) for the input-table schema and the full workflow.
 
 ---
 
