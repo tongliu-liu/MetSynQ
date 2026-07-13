@@ -16,6 +16,7 @@ from common import (
     clean_feature_ids,
     find_feature_column,
     read_feature_set,
+    read_flagged_feature_set,
     read_table,
     sample_columns,
     sorted_feature_ids,
@@ -114,8 +115,25 @@ def run_qualitative(
     true_features_path: Path,
     software_tables: list[tuple[str, Path]],
     output_dir: Path,
+    evaluated_features_path: Path | None = None,
+    truth_flag_column: str | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, set[str]]]:
-    true_features = read_feature_set(true_features_path)
+    reference_features = read_feature_set(true_features_path)
+    if (evaluated_features_path is None) != (truth_flag_column is None):
+        raise ValueError(
+            "evaluated_features_path and truth_flag_column must be provided together."
+        )
+    true_features = reference_features
+    if evaluated_features_path is not None and truth_flag_column is not None:
+        true_features = read_flagged_feature_set(
+            evaluated_features_path, truth_flag_column
+        )
+        outside_reference = true_features - reference_features
+        if outside_reference:
+            raise ValueError(
+                "Flagged qualitative features are missing from the reference table: "
+                + ", ".join(sorted_feature_ids(outside_reference)[:3])
+            )
     all_metrics: list[pd.DataFrame] = []
     qc_rows: list[dict[str, object]] = []
     error_sets: dict[str, set[str]] = {}
@@ -139,6 +157,11 @@ def run_qualitative(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Calculate qualitative FP/FN errors.")
     parser.add_argument("--true-features", type=Path, required=True)
+    parser.add_argument("--evaluated-features", type=Path)
+    parser.add_argument(
+        "--truth-flag-column",
+        help="Binary column selecting qualitative true features.",
+    )
     parser.add_argument(
         "--software-table",
         type=parse_name_path,
@@ -152,9 +175,14 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    run_qualitative(args.true_features, args.software_table, args.output_dir)
+    run_qualitative(
+        args.true_features,
+        args.software_table,
+        args.output_dir,
+        args.evaluated_features,
+        args.truth_flag_column,
+    )
 
 
 if __name__ == "__main__":
     main()
-

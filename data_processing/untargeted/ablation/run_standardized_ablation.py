@@ -66,7 +66,11 @@ def run_dataset(
     figure_dir.mkdir(parents=True, exist_ok=True)
     tables = [(variant, matrix_paths[variant]) for variant in VARIANTS]
     _, qualitative_qc, _ = run_qualitative(
-        data_dir / spec["true_features"], tables, output_dir
+        data_dir / spec["true_features"],
+        tables,
+        output_dir,
+        data_dir / spec["evaluated_features"],
+        str(spec["qualitative_truth_flag"]),
     )
     _, quantitative_qc, _ = run_quantitative(
         data_dir / spec["true_fold_changes"],

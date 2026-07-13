@@ -75,10 +75,46 @@ def _feature_set(path: Path) -> set[str]:
     return set(frame["feature_id"].dropna().astype(str).str.strip())
 
 
+def _qualitative_truth(
+    spec: dict[str, Any], data_dir: Path,
+) -> set[str]:
+    reference = _feature_set(data_dir / spec["true_features"])
+    evaluated_path = data_dir / spec["evaluated_features"]
+    evaluated = read_tsv(evaluated_path)
+    flag_column = str(spec["qualitative_truth_flag"])
+    required = {"feature_id", flag_column}
+    missing = sorted(required - set(evaluated.columns))
+    if missing:
+        raise ValueError(f"Missing columns in {evaluated_path}: {missing}")
+
+    feature_ids = evaluated["feature_id"].astype("string").str.strip()
+    if feature_ids.isna().any() or (feature_ids == "").any():
+        raise ValueError(f"Missing feature ID: {evaluated_path}")
+    if feature_ids.duplicated().any():
+        duplicate = feature_ids.loc[feature_ids.duplicated()].iloc[0]
+        raise ValueError(f"Duplicate feature ID {duplicate}: {evaluated_path}")
+
+    flags = pd.to_numeric(evaluated[flag_column], errors="coerce")
+    if flags.isna().any() or not flags.isin([0, 1]).all():
+        raise ValueError(
+            f"{flag_column} must contain only 0 or 1: {evaluated_path}"
+        )
+    truth = set(feature_ids.loc[flags == 1].astype(str))
+    if not truth:
+        raise ValueError(f"No qualitative true features found: {evaluated_path}")
+    outside_reference = truth - reference
+    if outside_reference:
+        raise ValueError(
+            "Qualitative true features missing from the reference table: "
+            f"{sorted_ids(outside_reference)[:3]}"
+        )
+    return truth
+
+
 def run_qualitative(
     dataset: str, spec: dict[str, Any], data_dir: Path, output_dir: Path,
 ) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, set[str]]]:
-    truth = _feature_set(data_dir / spec["true_features"])
+    truth = _qualitative_truth(spec, data_dir)
     metric_rows: list[dict[str, object]] = []
     error_sets: dict[str, set[str]] = {}
     qc_rows: list[dict[str, object]] = []

@@ -73,3 +73,26 @@ def read_feature_set(path: Path) -> set[str]:
     if not result:
         raise ValueError(f"No feature IDs found in {path}")
     return result
+
+
+def read_flagged_feature_set(path: Path, flag_column: str) -> set[str]:
+    """Read feature IDs whose binary membership flag is set to one."""
+    df = read_table(path)
+    feature_column = find_feature_column(df)
+    if flag_column not in df.columns:
+        raise ValueError(f"Missing flag column '{flag_column}' in {path}")
+
+    feature_ids = clean_feature_ids(df[feature_column])
+    if feature_ids.isna().any() or (feature_ids == "").any():
+        raise ValueError(f"Missing feature IDs in {path}")
+    if feature_ids.duplicated().any():
+        duplicate = feature_ids.loc[feature_ids.duplicated()].iloc[0]
+        raise ValueError(f"Duplicate feature ID {duplicate} in {path}")
+
+    flags = pd.to_numeric(df[flag_column], errors="coerce")
+    if flags.isna().any() or not flags.isin([0, 1]).all():
+        raise ValueError(f"{flag_column} must contain only 0 or 1 in {path}")
+    result = set(feature_ids.loc[flags == 1].astype(str))
+    if not result:
+        raise ValueError(f"No flagged feature IDs found in {path}")
+    return result

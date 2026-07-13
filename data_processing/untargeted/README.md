@@ -33,6 +33,9 @@ Use `--skip-ablation` to run only the main benchmark analysis.
 
 - Detection is defined as a non-missing, non-zero area. Rows missing in more
   than half of the samples are removed before qualitative evaluation.
+- Qualitative truth membership is selected from `evaluated_features.tsv` by
+  the binary flag named in `datasets.json`. Quantitative reference membership
+  is independent of this qualitative flag.
 - Fold change is `(mean_B + 1e-6) / (mean_A + 1e-6)`. An absolute relative
   fold-change error of at least 20% is a quantitative error.
 - Overall error IDs are the union of qualitative and quantitative error IDs.
@@ -45,8 +48,8 @@ Use `--skip-ablation` to run only the main benchmark analysis.
 
 ## Evaluation universes
 
-- QE HF: 1,551 evaluated entries, consisting of 836 true targets and 715
-  curated decoys.
+- QE HF: 1,551 evaluated entries, consisting of 835 qualitative true targets,
+  one quantitative-only reference, and 715 curated decoys.
 - TripleTOF 6600: 1,700 evaluated entries, consisting of 970 true targets and
   730 decoys.
 
@@ -97,4 +100,3 @@ The scripts in `ablation/xcms_modules/` require mzML inputs, mapping support
 tables, R, and the xcms package.
 
 Generated `results/` directories are ignored by Git.
-
