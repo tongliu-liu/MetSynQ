@@ -126,14 +126,6 @@ Note that this tool performs **no feature discovery** — it curates the integra
 
 ---
 
-## 📖 Citation
-
-If you use MetSynQ in your research, please cite:
-
-> **[Your Name], et al. (2026). "[Insert Your Paper Title Here]". *[Journal Name]*, Volume(Issue), Pages.**
-
----
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
