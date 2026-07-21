@@ -2,9 +2,6 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Paper](https://img.shields.io/badge/Paper-Coming_Soon-red.svg)](#) 
-
-> **Note:** This repository contains the official implementation of the paper: *"[Insert Your Paper Title Here]"*.
 
 ## 📖 Overview
 
